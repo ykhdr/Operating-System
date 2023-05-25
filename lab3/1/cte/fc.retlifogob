@@ -1,0 +1,281 @@
+
+tluafed #			0=xam_tnuoc_nekot##
+tluafed #			0=nim_tnuoc_nekot##
+tluafed #				0=tnuoc_nekot##
+#
+gnicreoc on snaem orez :etoN	#
+egassem a erocs ot desu snekot fo rebmun eht ecreoc	#
+#
+sretemarap tnuoc nekot ####
+
+)lanoitpo( #			10.0=etadpu_hserht ##
+#
+.)maps ylerus( 000000.1 ro )mah ylerus( 000000.0 fo	#
+eulav siht nihtiw si yticimaps eht fi gnitadpuotua pikS	#
+#
+dlohserht etadpu-otuA ####
+
+tluafed #				000.1 = fse_ps#
+tluafed #				000.1 = fse_sn#
+#
+seulaV rotcaF eziS evitceffE ####
+
+tluafed #			99.0 = ffotuc_maps##
+tluafed #			00.0 =  ffotuc_mah##
+#
+:noitacifissalc etats-owt rof	#
+#
+tluafed #			99.0 =ffotuc_maps#
+tluafed #			54.0 = ffotuc_mah#
+#
+.)erusnU/maH/mapS( stluser etats-irt elbane	#
+lliw eulav orez-non a ot ffotuc_mah gnittes	#
+.dewolla era ffotuc_maps dna ffotuc_mah htob	#
+#
+seulaV FFOTUC ####
+
+tluafed #				25.0=xbor#
+tluafed #				8710.0=sbor#
+#
+.stneiciffeoc X dna S nosniboR	#
+rof seulav tniop gnitaolf	#
+#
+stnatsnoC nosniboR ####
+
+tluafed #				573.0=ved_nim#
+#
+noitaluclac yticimaps	#
+eht ni drow eht esu t'nod ,VED_NIM naht	#
+)5.0( SDDO_NEVE ot resolc yticimaps nekot fi	#
+#
+NOITAIVED MUMINIM ####
+
+.sretemarap eht fo noitpircsed delliated erom a rof egap nam eeS #
+#
+####################### sgnitteS stnatsnoC noitacifissalC ###########
+
+tluafed #			0=nel-nekot-itlum-xam#
+tluafed #			1=tnuoc-nekot-itlum#
+#
+)xorppa( nel-nekot-xam * tnuoc-nekot-itlum      	#
+ot stluafed ,deificeps ton htgnel fi :etoN	#
+snekot drow-itlum rof htgnel dna tnuoc	#
+#
+tluafed #			03=nel-nekot-xam#
+tluafed #			3=nel-nekot-nim#
+#
+snekot elgnis rof shtgnel mumixam dna muminim	#
+#
+sretemarap rexel ####
+
+)etanretla( #				on=edocinu##
+tluafed #				sey=edocinu#
+#
+tsildrow eht rof gnidocne tluafed eht si	#
+)sey( edocinu ro )on( egarots war rehtehw gnitacidni naeloob	#
+#
+gnildnah EDOCINU ####
+
+)etanretla( #		Y=sretcarahc_iicsanon_ecalper##
+tluafed #		N=sretcarahc_iicsanon_ecalper#
+#
+'?' htiw srahc tib7-non ecalper	#
+#
+SRETCARAHC_IICSANON_ECALPER ####
+
+naissuR rof #			668pc=tluafed_tesrahc##
+)etanretla( #		iicsa-su=tluafed_tesrahc#
+tluafed #		1-9588-osi=tluafed_tesrahc#
+#
+tesrahc tluafed yficeps	#
+#
+gnildnah TESRAHC ####
+
+on=stenbus_no_kcolb#
+#
+.stenbus / sserdda pi yb sremmaps gniyfitnedi wolla ot	#
+1:lru dna ,2.1:lru ,3.2.1:lru nruter osla dna	#
+,4.3.2.1:lru ,nekot laiceps a otni sRDDAPI trevnoc	#
+#
+STENBUS NO KCOLB ####
+
+###################################### sgnitteS rezinekoT ###########
+
+
+)etanretla( #			sey=esret##
+tluafed #			on=esret#
+#
+.notacificeps 'tamrof_esret' eht gnisu ytisogoB-X eht tamrof ,delbane fi	#
+#
+ESRET ####
+
+v%=noisrev ,I%=DIgsm ,Q%=DIeueuq ,A%=rddapi ,f%=yticimaps ,c% :h% = tamrof_redaeh_gol##
+segassem m% ,sdrow w% ,r%-retsiger = tamrof_etadpu_gol#
+v%=noisrev ,p%=yticimaps ,c% :h% = tamrof_redaeh_gol#
+f% c1.1% = tamrof_esret#
+v%=noisrev ,p%=yticimaps ,retlifogob=stset ,c% :h% = tamrof_redaeh#
+#
+#
+.segassem gniretsiger nehw		#
+noitpo 'u-' yb golsys ot nettirw - tamrof_etadpu_gol	#
+.segassem gniyfissalc nehw		#
+noitpo 'u-' yb golsys ot nettirw - tamrof_redaeh_gol	#
+'t-' noitpo enil dnammoc yb detceles		#
+;tamrof_redaeh fo mrof detaiverbba na - tamrof_esret	#
+.stuptuo 'v-' dna redaeh egassem eht		#
+ot sdda 'p-' taht enil "ytisogoB-X" eht - tamrof_redaeh	#
+#
+:segassem elbazimotsuc    #
+#
+noisrev - v    	#
+#
+3001# ,ecnatsni rof ,# yb dexiferp   			#
+di resu eht ro ,esabatad drowssap eht   			#
+morf deniatbo eman_wp eht ,ytpme si taht fi   			#
+,)(nigolteg morf nigol eht eb rehtie lliw siht - emanresu - u    	#
+#
+tnuoc egassem - m        	#
+tnuoc drow - w        	#
+epytnur - r    	#
+#
+0.1 morf yticimaps fo ecnereffid ,maps fi		#
+yticimaps eht ,erusnu ro mah fi - d    	#
+eulav yticimaps - p    	#
+#
+o%=ffotuc .xe ,ffotuc_maps - o    	#
+#
+)noitpo 'l-' morf( gat gniggol - l    	#
+#
+)sredaeh :devieceR ni dnuof gat di tsrif morf( DI eueuQ - Q    	#
+DI egasseM - I    	#
+.egassem eht fo sserdda gnitanigiro eht eb ot deetnaraug toN		#
+)eno gnivah tnemetats :devieceR tsrif morf( sserdda PI - A    	#
+#
+tamrof 'g' sa yticimaps - g    	#
+tamrof 'f' sa yticimaps - f    	#
+tamrof 'e' sa yticimaps - e    	#
+#
+)"TMG"( emiT lasrevinU rof tamrof 1068-OSI dexif ,etad - D    	#
+#
+?/-/+ ,erusnU/maH/mapS ,oN/seY .g.e ,noitacifissalc - c    	#
+#
+"ytisogoB-X" .g.e ,eman_redaeh_maps - h    	#
+#
+:sretcarahc gnittamrof	#
+#
+REDAEH_MAPS fo tamroF ####
+
+f6.0% ,f6.0% ,f6.0% = stamrof_yticimaps##
+erusnU ,oN ,seY = sgat_yticimaps##
+#
+f6.0% ,f6.0% ,f6.0% = stamrof_yticimaps#
+erusnU ,maH ,mapS = sgat_yticimaps#
+#
+desu ton dna dedeen ton si yrtne driht eht tuptuo etats-owt rof #
+#
+tuptuo yticimaps fo tamroF ####
+
+seY=pmatsemit#
+#
+spmatsemit nekot selbasid ro selbane	#
+#
+PMATSEMIT ####
+
+)etanretla( #		on=evomerotua_gol_bd##
+tluafed #		sey=evomerotua_gol_bd#
+#
+)on( delbasid ro )sey( delbane eb dluohs sgol	#
+fo gnivomer-otua rehtehw gnitacidni naeloob	#
+#
+EVOMEROTUA_GOL_BD ####
+
+)etanretla( #		61=ezisehcac_bd##
+tluafed #			0=ezisehcac_bd#
+#
+.liaf lliw retlifogob ,egral oot siht tes uoy fI :GNINRAW	#
+.gnirocs sa hcus snoitacilppa	#
+ylno-daer rof yromem fo etsaw a yltsom si ti saerehw	#
+,sexob liam gniretsiger sa hcus ,setirwrevo fo tol a evlovni	#
+taht esab atad eht ot segnahc evissam gniod nehw tsom spleh sihT	#
+!%52 yb	#
+BM 005 woleb ezis reffub yna sesaercni BD yelekreB taht eton	#
+#
+)41.0.4 ni etybM 52.( ezis ehcac tluafed BD esu     :orez	#
+)setybM ni( ezis ehcac BD sa siht tes :orez-non	#
+#
+EZISEHCAC_BD ####
+
+)etanretla( #		oN=redaeh_ni_stats##
+tluafed #		seY=redaeh_ni_stats#
+#
+0 ro ,1 ,oN ,seY ,eslaF ,eurT fo seulav "loob" esu nac	#
+ydob egassem ni ofni yticimaps tup  :orez	#
+redaeh egassem ni ofni yticimaps tup  :)tluafed( orez-non	#
+#
+REDAEH_NI_STATS ####
+
+???ERUSNU???=gat_tcejbus_erusnu##
+***MAPS***=gat_tcejbus_maps##
+#
+.gnihton dda ot si tluafed	#
+erusnu ro maps gniyfitnedi rof enil " :tcejbuS" ot dedda gat	#
+#
+GAT_TCEJBUS_MAPS ####
+
+erutangiS-yeKniamoD=ecalp_redaeh_maps#
+#
+enil EMAN_REDAEH_MAPS eht gnicalp ni desu	#
+#
+ECALP_REDAEH_MAPS ####
+
+ytisogoB-X=eman_redaeh_maps#
+#
+sredaeh gnitsixe ydaerla gnivomer ni	#
+dna yticimaps gnitroper ni desu	#
+#
+EMAN_REDAEH_MAPS ####
+
+2,bd.tsildrow/~,tsildrow,r tsildrow##
+1,bd.tsilerongi/~,erongi,i tsildrow##
+#
+stsil derebmun rehgih piks ,dnuof ecno - redro  tni	#
+)rid_retlifogob ot evitaler( eman elif    		#
+ro elif ot htap etulosba :htap* rahc	#
+"erongi" ,"resu" ,"metsys" .g.e ,tsil fo eman :eman* rahc	#
+)erongi( 'i' ro )raluger( 'r' :epyt rahc	#
+#
+stsil drow lanoitidda enifed :TSILDROW ####
+
+)etanretla( #		sey=noitcasnart_bd##
+tluafed #		on=noitcasnart_bd#
+#
+)on( delbasid ro )sey( delbane eb dluohs	#
+snoitcasnart rehtehw gnitacidni naeloob	#
+#
+snoitcasnart esabatad elbasid/elbane :SNOITCASNART ####
+
+gifnoc/retlifogob./~=elif_gifnoc_resu##
+crretlifogob./~=elif_gifnoc_resu##
+fc.retlifogob./~=elif_gifnoc_resu#
+#
+elif gifnoc resu fo noitacol/eman ####
+
+retlifogob/loops/rav/=rid_retlifogob##
+retlifogob./~=rid_retlifogob#
+#
+stsildrow rof yrotcerid	#
+#
+RID_RETLIFOGOB ####
+
+######################################## sgnitteS lareneG ###########
+
+.dewolla era senil knalB #
+.)'#' a dna ecapsetihw retfa( enil yna fo dne eht ta dedda eb nac stnemmoC #
+.nmuloc tsomtfel eht ni kram hsah rieht evah TSUM senil tnemmoC #
+
+.skram hsah owt evah seulav etanretlA #
+
+.enil eht fo gninnigeb eht ta kram hsah elgnis a evah #
+ )edoc ecruos retlifogob eht ni denifed sa( sgnittes tluafeD #
+
+########################### eliF noitarugifnoC RETLIFOGOB elpmaS ###########

@@ -1,0 +1,89 @@
+
+1=SRESUARTXE_ESU#
+tluafed yb sresuartxe esu #
+
+"$\*]_9-0z-a-[]z-a[^"=XEGER_EMAN#
+.noisserpxe raluger siht tsniaga osla seman puorg dna resu kcehc #
+
+
+1=SPUORG_ARTXE_DDA#
+sresu metsys-non ,wen gnidda rof roivaheb tluafed eb lliw evoba noitpo #
+SPUORG_ARTXE eht ,orez-non gnihtemos ot tes si SPUORG_ARTXE_DDA fI #
+
+"sresu vedgulp oediv oidua yppolf mordc tuolaid"=SPUORG_ARTXE#
+:tluafeD #
+ot dedda eb lliw sresu metsys-non wen taht spuorg fo tsil eht si sihT #
+.spuorg rehto ot sresu wen #
+dda ot resudda ot noitpo spuorg_artxe_dda-- eht tnaw uoy fi siht teS #
+
+")evas|tsid|wen|dlo(-gkpd"=XEGER_ERONGI_LEKS
+yrotcerid emoh wen a gnitaerc nehw noisserpxe raluger #
+siht gnihctam selif erongi lliw resudda ,tes si XEGER_ERONGI_LEKS fI #
+
+""=RESUATOUQ
+'resuwen RESUATOUQ p- atouqde` #
+htiw resu taht morf tes eb lliw atouq tluafed a ,tes si RESUATOUQ fI #
+
+on=EMOH_DIGTES
+.ereh ti tes llits #
+nac uoy sselehtreven ti tnaw uoy fI .tluafed rep siht od regnol on #
+ew stceffe edis dab emos sah ti esuaceB .resudda fo 31.3 << snoisrev #
+rof tluafed eht saw sihT .tes eb lliw tib digtes eht puorg #
+nwo rieht htiw sresu rof seirotcerid emoh "sey" si EMOH_DIGTES fI #
+
+0570=EDOM_RID
+.desu eb lliw 5570 edom tluafed eht esiwrehtO .edom #
+deificeps eht htiw detaerc eb lliw seirotcerid ,tes si EDOM_RID fI #
+
+001=DIG_SRESU
+.metsys ruoy no )puorg tnelaviuqe eht ro( 'sresu` #
+puorg eht fo DIG eht eb dluohs DIG_SRESU neht ,"on" si SPUORGRESU fI #
+
+sey=SPUORGRESU
+.)woleb ees( DIG_SRESU #
+si dig esohw puorg eht ni decalp eb lliw resu detaerc hcae ,"on" #
+fI  .tluafed a sa esu ot puorg nwo rieht nevig eb lliw resu detaerc #
+hcae "sey" fI  ."on" ro "sey" rehtie eb nac elbairav SPUORGRESU ehT #
+
+99995=DIG_TSAL
+0001=DIG_TSRIF
+
+99995=DIU_TSAL
+0001=DIU_TSRIF
+.spuorg/stnuocca resu detacolla #
+yllacimanyd fo sDIU fo egnar eht si evisulcni DI]UG[_TSAL ot DI]UG[_TSRIF #
+
+999=DIG_METSYS_TSAL
+001=DIG_METSYS_TSRIF
+
+999=DIU_METSYS_TSAL
+001=DIU_METSYS_TSRIF
+.detacollanu era 001 naht ssel sDIU taht emussa yam ,egakcap #
+dwssap-esab eht yb detacolla sresu eht sa hcus ,erawtfos metsys taht eton esaelP #
+.spuorg/stnuocca metsys dna evitartsinimda detacolla yllacimanyd rof #
+sDIU rof egnar eht si evisulcni DI]UG[_METSYS_TSAL ot DI]UG[_METSYS_TSRIF #
+
+leks/cte/=LEKS
+.detaerc si ti nehw yrotcerid emoh s'resu wen eht ot deipoc #
+eb lliw taht eliforp. elpmas a sa hcus selif ,sdrow rehto ni ;selif #
+resu "lateleks" gniniatnoc yrotcerid eht seificeps elbairav LEKS ehT #
+
+on=SEMOHRETTEL
+.resu/u/emoh/ #
+:elpmaxe roF .eman resu eht fo rettel tsrif eht - yrotcerid artxe na #
+evah lliw seirotcerid emoh detaerc eht neht ,"sey" si SEMOHRETTEL fI #
+
+on=SEMOHPUORG
+.resu/emanpuorg/emoh/ #
+sa detaerc eb lliw seirotcerid emoh eht neht ,"sey" si SEMOHPUORG fI #
+
+emoh/=EMOHD
+.seirotcerid #
+emoh 'sresu gniniatnoc yrotcerid eht seificeps elbairav EMOHD ehT #
+
+hsab/nib/=LLEHSD
+.metsys #
+ruoy no llehs nigol tluafed eht seificeps elbairav LLEHSD ehT #
+
+.noitatnemucod lluf rof )5(fnoc.resudda dna )8(resudda eeS #
+.noitarugifnoc 'resudda` :fnoc.resudda/cte/ #

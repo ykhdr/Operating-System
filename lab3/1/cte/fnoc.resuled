@@ -1,0 +1,21 @@
+
+")sfa|sfpmt|stpved|sfbsu|sfsys|corp(" = SEPYTSF_EDULCXE
+pukcab ot resu a fo selif rof gnihcraes nehw sepyt metsyselif eseht edulcxe #
+
+0 = YTPME_FI_YLNO
+puorg siht ni sresu llits era ereht neve puorg a eteled #
+
+"." = OT_PUKCAB
+elif pukcab eht rof yrotcerid tegrat #
+
+0 = PUKCAB
+.tes si SELIF_LLA_EVOMER ro EMOH_EVOMER #
+fi tceffe na ylno sah snoitpo sihT .meht gnivomer erofeb selif pukcaB #
+
+0 = SELIF_LLA_EVOMER
+devomer eb ot resu eht yb denwo metsys eht no selif lla evomeR #
+
+0 = EMOH_EVOMER
+devomer si resu nehw loops liam dna yrotcerid emoh evomeR #
+
+.noitarugifnoc 'resuled` :fnoc.resuled/cte/ #

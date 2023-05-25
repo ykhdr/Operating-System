@@ -1,0 +1,347 @@
+
+
+
+
+RID_LIAMQ #
+ELOSNOC_DROWSSAP_ON #
+GNIRTS_NIGOL #
+SNOISSES_ESOLC #
+
+###################################################
+#                                                 #
+#                                   .raeppa llits #
+# yeht fi gninraw a yalpsid lliw seitilitu wodahS #
+#                                                 #
+#    .wodahs yb deldnah erom on era snoitpo esehT #
+#  						#
+####################### DETELOSBO #################
+
+YALED_LIAF#
+HTUA_HSHC#
+HTUA_NFHC#
+ZH_VNE#
+TIMILU#
+NEL_XAM_SSAP#
+NEL_NIM_SSAP#
+ELIF_EUSSI#
+ELIF_SNIGOLON#
+ELIF_NORIVNE#
+NRAW_SYAWLA_SSAP#
+SEIRT_EGNAHC_SSAP#
+HTAPTCID_BILKCARC#
+YLNO_LEEHW_US#
+BANE_SKCEHC_EMITTROP#
+BANE_SKCEHC_ERUCSBO#
+BANE_KCEHC_LIAM#
+BANE_GOLTSAL#
+BANE_KCEHC_SPULAID#
+ELIF_DTOM#
+
+###############
+#
+.meht fo stnaleviuqe eht elbane #
+#	ot /d.map/cte/ ni elif etairporppa eht tide #
+#	esaelP .MAP yb deldnah won era snoitpo esehT #
+#						#
+############## MAP YB DETELOSBO #################
+
+0005 SDNUOR_XAM_TPYRC_AHS #
+0005 SDNUOR_NIM_TPYRC_AHS #
+#
+.desu eb lliw eulav tsehgih eht ,XAM > NIM fI #
+.desu eb lliw eulav siht neht ,tes si seulav XAM ro NIM eht fo eno ylno fI #
+.egnar 999999999-0001 eht edisni eb tsum seulav ehT #
+.)0005( sdnuor fo rebmun tluafed eht esoohc lliw cbil eht ,deificeps ton fI #
+#
+.sresu #
+etacitnehtua ot dedeen eb lliw secruoser UPC erom ti taht osla eton tuB #
+.drowssap eht gnicrof eturb ot tluciffid erom si ti ,sdnuor fo tol a htiW #
+.sdnuor AHS fo rebmun eht enifeD #
+#
+.215AHS ro 652AHS ot tes si DOHTEM_TPYRCNE fi desu ylnO #
+#
+
+215AHS DOHTEM_TPYRCNE
+#
+.noitarugifnoc seludom MAP eht #
+htiw tnetsisnoc eulav a esu ot dednemmocer si tI :etoN #
+#
+noitpo BANE_TPYRC_5DM eht sedirrevO #
+)tluafed( drowssap gnitpyrcne rof desu eb lliw mhtirogla desab-SED ,SED ot tes fI #
+drowssap gnitpyrcne rof desu eb lliw mhtirogla desab-215AHS ,215AHS ot tes fI #
+drowssap gnitpyrcne rof desu eb lliw mhtirogla desab-652AHS ,652AHS ot tes fI #
+drowssap gnitpyrcne rof desu eb lliw mhtirogla desab-5DM , 5DM ot tes fI #
+#
+
+on	BANE_TPYRC_5DM#
+#
+.DOHTEM_TPYRCNE esu dluohs uoY .detacerped si elbairav sihT #
+#
+."on" si tluafeD  .mhtirogla wen eht dnatsrednu t'nod hcihw #
+smetsys rehto ot sdrowssap detpyrcne ypoc ot deen uoy fi "on" ot teS #
+.sgnirts tlas regnol dna htgnel detimilnu fo sdrowssap stroppus tI #
+.DSBeerF fo sesaeler tnecer yb desu eno eht htiw elbitapmoc mhtirogla #
+desab-5DM eht gnisu detpyrcne eb lliw sdrowssap wen ,"sey" ot tes fI #
+#
+
+mordc:oidua:yppolf		SPUORG_ELOSNOC#
+#
+.us dna nigol yb desu si elbairav sihT #
+#
+...redaer eht rof esicrexe na sa tfel si ti od ot woH #
+.elosnoc eht no ni deggol ton nehw neve ,spuorg eseht ot ssecca #
+tnenamrep niag ot sresu rof elbissop si ti - noituac htiw esU #
+#
+.enon si tluafeD  .)gnittes #
+ELOSNOC eht yb denimreted sa( elosnoc eht no ni gniggol nehw #
+tes puorg yratnemelppus s'resu eht ot dda ot spuorg fo tsiL #
+#
+
+40ytt:30ytt:20ytt:10ytt:elosnoc	ELOSNOC#
+selosnoc/cte/	ELOSNOC#
+#
+.us dna nigol yb desu si elbairav sihT #
+#
+.secived eseht nopu #
+ylno dewolla eb lliw snigol tooR  .seman ecived fo tsil detimiled ":" a #
+ro seman ecived gniniatnoc elif a fo emanhtap lluf rehtie ,denifed fI #
+#
+
+llehsekaf/nib/ LLEHS_EKAF #
+#
+.llehs lautca eht gninnur erofeb )... ,rennab #
+,noitacifitnehtua lanoitidda ,gniggol( stnaw ti revetahw od yam margorp ehT #
+.s'llehs eht eb lliw )]0[vgra( eman elbisiv sti hguohtla ,dehcnual eb lliw #
+retemarap siht yb deificeps margorp eht ,llehs resu laer eht fo daetsnI #
+#
+
+sey BANE_SPUORGRESU
+#
+.resu eht fo #
+eman eht htiw puorg a tluafed yb etaerc lliw ddaresu dna ,srebmem erom #
+on sniatnoc ti fi puorg s'resu eht evomer lliw ledresu ,sey ot tes fI #
+#
+.eman puorg yramirp eht sa emas eht si emanresu dna ,dig sa emas eht #
+si diu eht fi ,sresu toor-non rof )700 >- 770 ,200 >- 220 :selpmaxe( #
+stib renwo sa emas eht eb ot stib puorg ksamu eht fo gnittes elbanE #
+#
+
+lacol_ledresu/nibs/rsu/	DMC_LEDRESU#
+#
+.)tnemugra tsrif eht sa dessap( devomer eb ot resu eht #
+yb denwo .cte sboj tnirp/norc/ta yna evomer dluohs tI #
+.resu a gnivomer nehw nur si dnammoc siht ,denifed fI #
+#
+
+sey	EMOH_TLUAFED
+#
+.on ni tluafeD #
+?yrotcerid emoh eht ot dc t'nac ew fi dewolla eb nigol dluohS #
+#
+
+hwr		TCIRTSER_NFHC
+ #
+."hwrf" = "on" dna "hwr" = "sey" ,ytilibitapmoc drawkcab roF #
+.dewolla era segnahc on ,denifed ton fI  .)enohp emoh ,enohp #
+krow ,rebmun moor ,eman lluf( "hwrf" srettel fo noitanibmoc yna #
+esu - nfhc gnisu sresu raluger yb degnahc eb yam sdleif hcihW #
+#
+
+06		TUOEMIT_NIGOL
+#
+nigol rof sdnoces ni emit xaM #
+#
+
+5		SEIRTER_NIGOL
+#
+.SEIRTXAM_MAP ecrofne ton seod taht eludom noitacitnehtua na #
+gnisu era uoy esac ni kcabllaf efas a si siht ,revewoH .seirter 3 fo ni #
+tliub nwo s'ti sah eludom xinu_map tluafed eht ecnis ,MAP yb nedirrevo #
+eb ylekil tsom lliw sihT .dab si drowssap fi seirter nigol fo rebmun xaM #
+#
+
+999  		XAM_DIG_SYS#
+001  		NIM_DIG_SYS#
+stnuocca metsyS #
+00006			XAM_DIG
+0001 			NIM_DIG
+#
+ddapuorg ni noitceles dig citamotua rof seulav xam/niM #
+#
+
+999  		XAM_DIU_SYS#
+001  		NIM_DIU_SYS#
+stnuocca metsyS #
+00006			XAM_DIU
+0001 			NIM_DIU
+#
+ddaresu ni noitceles diu citamotua rof seulav xam/niM #
+#
+
+7	EGA_NRAW_SSAP
+0	SYAD_NIM_SSAP
+99999	SYAD_XAM_SSAP
+#
+.seripxe drowssap a erofeb nevig gninraw syad fo rebmuN	EGA_NRAW_SSAP	#
+.segnahc drowssap neewteb dewolla syad fo rebmun muminiM	SYAD_NIM_SSAP	#
+.desu eb yam drowssap a syad fo rebmun mumixaM	SYAD_XAM_SSAP	#
+#
+:slortnoc gniga drowssaP #
+#
+
+0570	EDOM_EMOH
+.edom eht etaerc ot desu si KSAMU fo eulav eht ,tes ton si EDOM_EMOH fI #
+.seirotcerid emoh #
+wen rof edom eht tes ot )8(sresuwen dna )8(ddaresu yb desu si EDOM_EMOH #
+
+220		KSAMU
+520	RAHCLLIK
+7710	RAHCESARE
+#
+.lamicedaxeh teg ot "x0" ,latco teg ot "0" htiw seulav eseht xiferP #
+#
+.200 emoceb lliw 220 .g .e ,snoissimrep puorg sa desu #
+eb lliw snoissimrep resu eht ,eseht rof :eman puorg yramirp eht sa emas eht #
+si emanresu dna ,dig sa emas eht si diu eht .e .i ,spuorg resu etavirp rof #
+eulav tluafed KSAMU siht yfidom lliw taht ,"sey" ot tes si BANE_SPUORGRESU fI #
+#
+.dnim #
+reh/sih pu ekam tsum nimdasys hcae : ereh rewsnA eurT enO on si erehT #
+ycavirp rof retteb deredisnoc eb dluoc ,770 neve ro ,720 #
+KSAMU rof naibeD ni eulav "lacirotsih" eht si 220 #
+.seirotcerid emoh wen eht fo edom eht tes ot sresuwen dna ddaresu #
+yb desu si dna ksamu_map rof eulav ksamu tluafed eht si KSAMU #
+ #
+.senihcam V metsyS no ylno desu era RAHCLLIK dna RAHCESARE ehT #
+#
+.eulav "ksamu" tluafeD		KSAMU	#
+.)U/LRTC = '520\'( retcarahc LLIK lanimreT	RAHCLLIK	#
+.)ecapskcab = '010\'( retcarahc ESARE lanimreT	RAHCESARE	#
+#
+:snoitazilaitini noitarugifnoc nigoL #
+#
+
+0060		MREPYTT
+ytt	PUORGYTT
+
+.dnammoc "y gsem" eht #
+ gniussi yb meht etirw ot elpoep rehto wolla llits nac sresU #
+
+lanimret ro elosnoc esle enoyna ot etirw ot enoyna wolla ton ot #
+0060 llits si MREPYTT rof eulav dednemmocer dna tluafed eht ,revewoH #
+ytt digtes era smargorp ralimis ro etirw-dsb/nib/rsu/ naibeD nI #
+#
+.006 ro 226 rehtie ot MREPYTT #
+ngissa dna tuo detnemmoc PUORGYTT evael esiwrehtO  .0260 ot MREPYTT #
+dna rebmun puorg eht ot PUORGYTT enifed ,slanimret eht snwo hcihw #
+puorg laiceps a ot "digtes" si hcihw margorp "etirw" a evah uoy fI #
+#
+.noissimrep siht ot tes eb lliw ytt nigoL		MREPYTT	#
+.pihsrenwo puorg siht dengissa eb lliw ytt nigoL	PUORGYTT	#
+#
+snoissimrep lanimreT #
+#
+
+semag/rsu/:semag/lacol/rsu/:nib/:nib/rsu/:nib/lacol/rsu/=HTAP	HTAP_VNE
+nib/:nibs/:nib/rsu/:nibs/rsu/:nib/lacol/rsu/:nibs/lacol/rsu/=HTAP	HTAPUS_VNE
+)selif putrats llehs eht ni tser eht dda ,laminim era yeht( #
+#
+.sresu lamron dna resurepus rof ,sgnittes HTAP tluafed ehT  *DERIUQER* #
+#
+
+snigolhsuh/cte/	ELIF_NIGOLHSUH#
+nigolhsuh.	ELIF_NIGOLHSUH
+#
+.yrotcerid emoh s'resu eht ni stsixe elif eht fi delbane eb lliw edom dehsuh #
+neht ,emanhtap lluf a ton fI  .elif eht ni dnuof era llehs ro eman s'resu #
+eht fi delbane eb lliw edom dehsuh neht ,emanhtap lluf a fI  .ecneuqes #
+nigol eht gnirud rettahc lausu eht lla stibihni hcihw elif ,denifed fI #
+#
+
+us		EMAN_US
+#
+."hs-" ekil gnihtemos .g.e ,nur gnieb yllautca llehs eht fo eman #
+eht yalpsid dluow "sp" neht ,denifed ton fI  ."us-" si dnammoc #
+eht yalpsid lliw "sp" a neht "us" sa denifed si siht fi ,elpmaxe #
+roF  ."- us" gninnur nehw yalpsid ot eman dnammoc eht ,denifed fI #
+#
+
+pmtb/gol/rav/	ELIF_PMTF
+#
+...os ,pmtb/gol/rav/ daer lliw ,btsal sa dekovni nehw ,tsal #
+tamrof pmtu a ni ereh deggol eb lliw seruliaf nigol ,denifed fI #
+#
+
+epytytt/cte/	ELIF_EPYTYTT#
+#
+."10ytt  001tv" ekil gnihtemos tamrof a ni si elif eht fo enil hcaE #
+.retemarap tnemnorivne MRET ot enil ytt spam hcihw elif ,denifed fI #
+#
+
+golus/gol/rav/	ELIF_GOLUS#
+#
+.elif siht ot deggol si ytivitca us lla ,denifed fI #
+#
+
+sey		BANE_GS_GOLSYS
+sey		BANE_US_GOLSYS
+#
+.gs dna prgwen rof emas eht seod BANE_GS_GOLSYS #
+.gniggol elif golus ot noitidda ni - ytivitca us fo gniggol "golsys" elbanE #
+#
+
+on		SNIGOL_KO_GOL
+#
+snigol lufsseccus fo gniggol elbanE #
+#
+
+on	BANE_LIAFKNU_GOL
+nrecnoc #
+ytiruces a emoceb dluoc siht woh tuoba sliated rof 377892# dna 308092# eeS #
+ .elbadaer dlrow emoceb yam semanresu nwonknU :GNINRAW #
+#
+.dedrocer era seruliaf nigol nehw semanresu nwonknu fo yalpsid elbanE #
+#
+
+sey		BANE_GOLLIAF
+#
+.eludom MAP yllat_map eht htiw stcilfnoc noitpo sihT #
+.ofni eruliaf nigol golliaf/gol/rav/ fo yalpsid dna gniggol elbanE #
+#
+
+liam.      ELIF_LIAM#
+liam/rav/        RID_LIAM
+detroppus erom on #
+eb neht lliw selbairav eht dna ddaresu/tluafed/cte/ ot evom #
+noos lliw selbairav eseht gnittes :noitautis yraropmet a si sihT #
+#
+.cte ,us ,nigol       #
+rof dedivorp selif noitarugifnoc MAP tluafed eeS       #
+seludom MAP liam_map eht fo boj       #
+eht yleritne ,naibeD ni 1-21.0.4 wodahs morf gnitrats ,si hcihw       #
+elbairav tnemnorivne LIAM sresu pu gnittes rof desu erom on si sihT :ETON #
+#
+ELIF_LIAM$ erofeb yrotcerid        #
+emoh resu eht gnidneperp yb deniatbo emanelif deifilauq-ylluf        #
+eht sa selif loops liam sresu eht fo noitacol eht senifed ELIF_LIAM -      #
+.woleb        #
+denifed sa RID_LIAM ot emanresu eht gnidneppa yb )esu xobm rof(        #
+selif loops liam sresu fo noitacol eht senifed RID_LIAM -      #
+:yllaitnessE   #
+#
+.ecnedecerp sekat RID_LIAM   #
+,ELIF_LIAM dna RID_LIAM enifed _od_ uoy fI  .yrotcerid emoh   #
+eht ot evitaler ,elif fo eman _ro_ ,ediser sexobliam erehw yrotceriD   #
+domresu/ledresu/ddaresu rof DERIUQER #
+
+mkeram--  .xuniL rof deifidoM #
+#
+.derongi era senil knalb dna )"#" htiw gninnigeb senil( senil tnemmoC #
+#
+.detibihni eb lliw noitpo ro noitca debircsed eht #
+neht deificeps ton fi - lanoitpo era smeti rehto llA  .demussa eb #
+lliw eulav )tcerrocni ylbissop dna( yrartibra emos ,deificepsnu fI #
+.HTAP_VNE dna ,HTAPUS_VNE ,RID_LIAM  :denifed eb tsum smeti eerhT #
+#
+.egakcap nigol eht rof snoitinifed lortnoc noitarugifnoC - sfed.nigol/cte/ #
+#
