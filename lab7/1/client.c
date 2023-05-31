@@ -15,7 +15,7 @@ int main() {
 
     sockfd = socket(AF_INET, SOCK_DGRAM, 0);
     if (sockfd < 0) {
-        perror("Ошибка при создании сокета");
+        perror("socket");
         exit(1);
     }
 
@@ -26,12 +26,12 @@ int main() {
     serverAddr.sin_addr.s_addr = inet_addr(SERVER_IP);
 
     while (1) {
-        printf("Введите сообщение (или 'q' для выхода): ");
+        printf("Enter message (or 'q' for exit): ");
         fgets(buffer, MAX_BUFFER_SIZE, stdin);
 
         ssize_t sendLen = sendto(sockfd, buffer, strlen(buffer), 0, (struct sockaddr *)&serverAddr, sizeof(serverAddr));
         if (sendLen < 0) {
-            perror("Ошибка при отправке данных");
+            perror("sendto");
             close(sockfd);
 	    exit(1);
         }
@@ -43,12 +43,12 @@ int main() {
 
         ssize_t recvLen = recvfrom(sockfd, buffer, MAX_BUFFER_SIZE, 0, (struct sockaddr *)&serverAddr, &addrLen);
         if (recvLen < 0) {
-            perror("Ошибка при получении данных");
+            perror("recvfrom");
 	    close(sockfd);
 	    exit(1);
         }
 
-        printf("Получено от сервера: %s\n", buffer);
+        printf("Received from server: %s\n", buffer);
     }
 
     close(sockfd);

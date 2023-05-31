@@ -15,7 +15,7 @@ int main() {
 
     sockfd = socket(AF_INET, SOCK_DGRAM, 0);
     if (sockfd < 0) {
-        perror("Ошибка при создании сокета");
+        perror("socket");
         exit(1);
     }
 
@@ -27,26 +27,26 @@ int main() {
     serverAddr.sin_addr.s_addr = htonl(INADDR_ANY);
 
     if (bind(sockfd, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) < 0) {
-        perror("Ошибка при привязке сокета");
+        perror("bind");
     	close(sockfd);
     	exit(1);
     }
 
-    printf("UDP сервер запущен и ожидает клиентов...\n");
+    printf("UDP server is running and waiting for clients...\n");
 
     while (1) {
         socklen_t addrLen = sizeof(clientAddr);
 
         ssize_t recvLen = recvfrom(sockfd, buffer, MAX_BUFFER_SIZE, 0, (struct sockaddr *)&clientAddr, &addrLen);
         if (recvLen < 0) {
-            perror("Ошибка при получении данных");
+            perror("recvfrom");
             close(sockfd);
 	    exit(1);
         }
 
         ssize_t sendLen = sendto(sockfd, buffer, recvLen, 0, (struct sockaddr *)&clientAddr, addrLen);
         if (sendLen < 0) {
-            perror("Ошибка при отправке данных");
+            perror("sendto");
             close(sockfd);
 	    exit(1);
         }
