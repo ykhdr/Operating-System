@@ -9,12 +9,12 @@
 int global = 0;
 
 void *mythread(void *arg) {
-	printf("\nmythread:\npid: %d\nppid: %d\ntid: %d]: Hello from mythread!\n", getpid(), getppid(), gettid());
-	printf("pthread_self: %ld\n",pthread_self());
+	printf("\nmythread:\n\tpid: %d\n\tppid: %d\n\ttid: %d\n", getpid(), getppid(), gettid());
+	printf("\tpthread_self: %ld\n",pthread_self());
 
 	int local  = 0;
 	static int local_static = 0;
-        const int local_const = 0;	
+    const int local_const = 0;	
 
 	if(gettid()%2==0){
 	    local++;
@@ -22,7 +22,8 @@ void *mythread(void *arg) {
 	 
 	    sleep(10);
 	}
-	printf("\ntid: %d\nvars:\nlocal: %p\nstatic local: %p\nconst local: %p\nglobal: %p\n",gettid(),&local,&local_static,&local_const,&global);
+
+    printf("\ntid: %d\nvars:\n\tlocal: %p\n\tstatic local: %p\n\tconst local: %p\n\tglobal: %p\n",gettid(),&local,&local_static,&local_const,&global);
 
 	
 	if(gettid()%2 == 1){
@@ -46,12 +47,12 @@ int main() {
 
 	printf("main [%d %d %d]: Hello from main!\n", getpid(), getppid(), gettid());
 
-
-        err = pthread_create(&tid1, NULL, mythread, NULL);
-    	if (err) {
-	    	printf("main: pthread_create() failed: %s\n", strerror(err));
-		return -1;
-        }
+    sleep(10);
+    err = pthread_create(&tid1, NULL, mythread, NULL);
+ 	if (err) {
+    	printf("main: pthread_create() failed: %s\n", strerror(err));
+	    return -1;
+    }
 
 	err = pthread_create(&tid2, NULL, mythread, NULL);
 	err = pthread_create(&tid3, NULL, mythread, NULL);
