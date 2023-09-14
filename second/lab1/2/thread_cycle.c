@@ -7,8 +7,8 @@
 #include <unistd.h>
 
 void *print_thread(void *arg){
-    printf("tid: %d\n", gettid());
-    pthread_detach(pthread_self());
+    printf("tid: %d\n", pthread_self());
+  //  pthread_detach(pthread_self());
     pthread_exit(NULL);
 }
 

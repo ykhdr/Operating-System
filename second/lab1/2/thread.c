@@ -6,9 +6,9 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-int number = 42;
 void *number_thread(void *arg){
-    pthread_exit(&number);
+	static int number = 42;
+	pthread_exit(&number);
 }
 
 void *hello_thread(void *arg){
