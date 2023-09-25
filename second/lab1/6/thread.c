@@ -12,6 +12,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <malloc.h>
 
 
 #define PAGE 4096
@@ -41,11 +42,11 @@ void* create_stack(size_t size, int tid){
     ftruncate(stack_fd,0);
     ftruncate(stack_fd,size);
 
-    stack = mmap(NULL,size,PROT_READ|PROT_WRITE, MAP_SHARED, stack_fd, 0);
+    stack = mmap(NULL,size,PROT_NONE, MAP_SHARED, stack_fd, 0);
     
-    mprotect(stack+PAGE, STACK_SIZE - PAGE, PROT_READ|PROT_WRITE);
-    memset(stack+PAGE,0x7f,STACK_SIZE-PAGE);
-    
+    mprotect(stack+PAGE, STACK_SIZE - 2*PAGE, PROT_READ|PROT_WRITE);
+    memset(stack+PAGE, 0x0, STACK_SIZE-2*PAGE);
+     
     close(stack_fd);
 
     return stack;
@@ -84,7 +85,7 @@ int mythread_create(mythread_t *mytid, start_routine_t start_routine, void* arg)
 
     child_stack = create_stack(STACK_SIZE, tid);
      
-    mythread = (mythread_struct_t*)(child_stack + STACK_SIZE - sizeof(mythread_struct_t));
+    mythread = (mythread_struct_t*)malloc(sizeof(mythread_struct_t));
     mythread->mythread_id = tid;
     mythread->start_routine = start_routine;
     mythread->arg = arg; 
@@ -92,12 +93,7 @@ int mythread_create(mythread_t *mytid, start_routine_t start_routine, void* arg)
     mythread->finished = 0;
     mythread->joined = 0;
 
-
-    child_stack = (void*)mythread;
-
-    printf("child stack %p; mythread_struct %p; \n", child_stack, mythread);
-
-    child_pid =  clone(mythread_startup,child_stack, CLONE_VM | CLONE_FILES | CLONE_THREAD | CLONE_SIGHAND, (void*)mythread);
+    child_pid =  clone(mythread_startup,child_stack + STACK_SIZE - PAGE, CLONE_VM | CLONE_FILES | CLONE_THREAD | CLONE_SIGHAND, (void*)mythread);
     if(child_pid == -1){
         fprintf(stderr,"clone failed: %s\n",strerror(errno));
         return -1;
@@ -122,6 +118,8 @@ void mythread_join(mythread_t mytid, void** retval){
     *retval = mythread->retval;
     
     mythread->joined = 1;
+
+    free(mythread);
 }
 
 void* mythread(void *arg){
