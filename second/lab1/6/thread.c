@@ -135,14 +135,26 @@ void* mythread(void *arg){
 int main(){
     mythread_t tid1;
     mythread_t tid2;
-     
+    mythread_t tid3;
+    mythread_t tid4;
+    mythread_t tid5;
+          
     void* retval1;
     void* retval2;
-    
+    void* retval3;
+    void* retval4;
+    void* retval5;
+     
     mythread_create(&tid1,mythread, "hello from thread1");
-    sleep(2);
+    sleep(1);
     mythread_create(&tid2,mythread, "hello from thread2");
-    
+    sleep(1);
+    mythread_create(&tid3,mythread, "hello from thread3");
+    sleep(1);
+    mythread_create(&tid4,mythread, "hello from thread4");
+    sleep(1);
+    mythread_create(&tid5,mythread, "hello from thread5");    
+
     mythread_join(tid1,&retval1);
 
     printf("main: thread1 returned value : %s\n", (char*) retval1);
@@ -150,4 +162,17 @@ int main(){
     mythread_join(tid2,&retval2);
 
     printf("main: thread2 returned value : %s\n", (char*) retval2);
-}
+
+    mythread_join(tid3,&retval3);
+
+    printf("main: thread3 returned value : %s\n", (char*) retval3);
+
+    mythread_join(tid4,&retval4);
+
+    printf("main: thread4 returned value : %s\n", (char*) retval4);
+
+    mythread_join(tid5,&retval5);
+
+    printf("main: thread5 returned value : %s\n", (char*) retval5);
+
+}   
