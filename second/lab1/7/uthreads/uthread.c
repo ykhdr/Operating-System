@@ -44,42 +44,14 @@ void uthread_scheduler(uthread_config_t *config) {
 }
 
 
-int create_stack(void **stack, off_t size, int thread_num) {
-    char stack_file[128];
-    int stack_fd;
-    snprintf(stack_file, sizeof(stack_file), "stack-%d", thread_num);
-
-    stack_fd = open(stack_file, O_RDWR | O_CREAT, 0660);
-    if (stack_fd == -1) {
-        printf("create_stack: failed to open file");
-        return -1;
-    }
-
-    int err = ftruncate(stack_fd, 0);
-    if (err == -1) {
-        printf("create_stack: failed to ftruncate");
-        return -1;
-    }
-
-    err = ftruncate(stack_fd, size);
-    if (err == -1) {
-        printf("create_stack: failed to ftruncate");
-        return -1;
-    }
-
-    *stack = mmap(NULL, size, PROT_WRITE, MAP_SHARED | MAP_STACK, stack_fd, 0);
+int create_stack(void **stack) {
+    *stack = mmap(NULL, STACK_SIZE, PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
     if (*stack == MAP_FAILED) {
-        printf("create_stack: failed mmap");
+        perror("create_stack: failed mmap");
         return -1;
     }
 
-    err = close(stack_fd);
-    if (err == -1) {
-        printf("create_stack: failed mmap");
-        return -1;
-    }
-
-    memset(*stack, 0x00, size);
+    memset(*stack, 0x00, STACK_SIZE);
     mprotect(stack + PAGE, STACK_SIZE - 2 * PAGE, PROT_READ | PROT_WRITE);
     return EXIT_SUCCESS;
 }
@@ -98,11 +70,12 @@ int uthread_create(uthread_config_t *config, uthread_struct_t **thread, void *(s
 
     printf("uthread_create: creating thread %d\n", config->uthread_count);
     void *stack;
-    int err = create_stack(&stack, STACK_SIZE, config->uthread_count);
+    int err = create_stack(&stack);
     if (err == -1) {
         printf("uthread_create: failed to create stack");
         return -1;
     }
+
     uthread_struct_t *mythread = (uthread_struct_t *) (stack + STACK_SIZE - sizeof(uthread_struct_t));
 
     err = getcontext(&mythread->ucontext);
