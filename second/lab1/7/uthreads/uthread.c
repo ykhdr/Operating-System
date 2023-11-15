@@ -26,7 +26,6 @@ uthread_config_t *uthread_init(uthread_struct_t *main_thread) {
 }
 
 void uthread_scheduler(uthread_config_t *config) {
-    int err;
     ucontext_t *cur_context, *next_context;
 
     cur_context = &(config->uthreads[config->uthread_cur]->ucontext);
@@ -35,7 +34,7 @@ void uthread_scheduler(uthread_config_t *config) {
 
     next_context = &(config->uthreads[config->uthread_cur]->ucontext);
 
-    err = swapcontext(cur_context, next_context);
+    int err = swapcontext(cur_context, next_context);
 
     if (err == -1) {
         printf("Bad swap context");
