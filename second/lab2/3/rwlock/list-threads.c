@@ -200,9 +200,11 @@ void* swap_thread(void* data) {
 
 void* count_monitor(void* arg) {
     int* counters = (int *)arg;
+    int iteration = 0;
     while (1) {
-        printf("ASC: %d, DESC: %d, EQ: %d, SWAP1: %d, SWAP2: %d, SWAP3: %d\n",
-               counters[ASC], counters[DESC], counters[EQ], counters[SWAP1], counters[SWAP2], counters[SWAP3]);
+        printf("[%d] ASC: %d, DESC: %d, EQ: %d, SWAP1: %d, SWAP2: %d, SWAP3: %d\n",
+               iteration, counters[ASC], counters[DESC], counters[EQ], counters[SWAP1], counters[SWAP2], counters[SWAP3]);
+        iteration++;
         sleep(1);
     }
     return NULL;
