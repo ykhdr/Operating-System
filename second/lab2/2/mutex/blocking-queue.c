@@ -115,7 +115,7 @@ int blocking_queue_get(blocking_queue_t *q, int *val) {
     assert(q->count >= 0);
 
     pthread_mutex_lock(&q->lock);
-//  TODO: сделать sleep при попытке читать
+
     if (q->count == 0) {
         pthread_mutex_unlock(&q->lock);
         return 0;

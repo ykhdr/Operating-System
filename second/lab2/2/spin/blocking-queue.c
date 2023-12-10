@@ -33,7 +33,7 @@ blocking_queue_t* blocking_queue_init(int max_count) {
     q->add_attempts = q->get_attempts = 0;
     q->add_count = q->get_count = 0;
 
-    if (pthread_spin_init(&q->lock, PTHREAD_PROCESS_SHARED) != 0) {
+    if (pthread_spin_init(&q->lock, PTHREAD_PROCESS_PRIVATE) != 0) {
         printf("Failed to initialize the spinlock\n");
         abort();
     }
@@ -81,7 +81,7 @@ int blocking_queue_add(blocking_queue_t *q, int val) {
 
     if (q->count == q->max_count) {
         pthread_spin_unlock(&q->lock);
-        return 0;
+        return -1;
     }
 
     qnode_t *new = malloc(sizeof(qnode_t));

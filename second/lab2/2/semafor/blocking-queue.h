@@ -20,7 +20,7 @@ typedef struct _Queue {
     qnode_t *last;
 
     pthread_t qmonitor_tid;
-    pthread_mutex_t lock;
+    sem_t lock;
     sem_t empty;
     sem_t full;
 

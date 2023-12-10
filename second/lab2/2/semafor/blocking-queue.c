@@ -36,11 +36,7 @@ blocking_queue_t* blocking_queue_init(int max_count) {
 
     sem_init(&q->empty, 0, max_count);
     sem_init(&q->full, 0, 0);
-
-    if (pthread_mutex_init(&q->lock, NULL) != 0) {
-        printf("Failed to initialize the mutex\n");
-        abort();
-    }
+    sem_init(&q->lock, 0, 1);
 
     err = pthread_create(&q->qmonitor_tid, NULL, qmonitor, q);
     if (err) {
@@ -52,13 +48,13 @@ blocking_queue_t* blocking_queue_init(int max_count) {
 }
 
 void blocking_queue_destroy(blocking_queue_t **q) {
-    pthread_mutex_lock(&(*q)->lock);
     if (*q == NULL) {
         return;
     }
 
     sem_destroy(&(*q)->empty);
     sem_destroy(&(*q)->full);
+    sem_destroy(&(*q)->lock);
 
     pthread_cancel((*q)->qmonitor_tid);
     pthread_join((*q)->qmonitor_tid, NULL);
@@ -69,13 +65,9 @@ void blocking_queue_destroy(blocking_queue_t **q) {
         free(tmp);
     }
 
-    pthread_mutex_t lock = (*q)->lock;
-    pthread_mutex_destroy(&(*q)->lock);
-
     free(*q);
     *q = NULL;
 
-    pthread_mutex_unlock(&lock);
 }
 
 int blocking_queue_add(blocking_queue_t *q, int val) {
@@ -94,7 +86,7 @@ int blocking_queue_add(blocking_queue_t *q, int val) {
     new->val = val;
     new->next = NULL;
 
-    pthread_mutex_lock(&q->lock);
+    sem_wait(&q->lock);
 
     if (!q->first)
         q->first = q->last = new;
@@ -107,8 +99,7 @@ int blocking_queue_add(blocking_queue_t *q, int val) {
     q->add_count++;
 
     sem_post(&q->full);
-
-    pthread_mutex_unlock(&q->lock);
+    sem_post(&q->lock);
 
     return 1;
 }
@@ -120,7 +111,7 @@ int blocking_queue_get(blocking_queue_t *q, int *val) {
 
     sem_wait(&q->full);
 
-    pthread_mutex_lock(&q->lock);
+    sem_wait(&q->lock);
 
     qnode_t *tmp = q->first;
 
@@ -133,7 +124,7 @@ int blocking_queue_get(blocking_queue_t *q, int *val) {
 
     sem_post(&q->empty);
 
-    pthread_mutex_unlock(&q->lock);
+    sem_post(&q->lock);
 
     return 1;
 }
