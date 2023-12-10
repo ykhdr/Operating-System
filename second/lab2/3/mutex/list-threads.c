@@ -2,7 +2,7 @@
 #include <pthread.h>
 #include "list.h"
 
-#define STORAGE_CAPACITY 1000
+#define STORAGE_CAPACITY 10000
 #define THREAD_COUNT 6
 #define ASC 0
 #define DESC 1
@@ -193,6 +193,8 @@ void* swap_thread(void* data) {
             }
         }
     }
+
+    return NULL;
 }
 
 
