@@ -125,7 +125,6 @@ int blocking_queue_add(blocking_queue_t *q, int val) {
     return 1;
 }
 
-
 int blocking_queue_get(blocking_queue_t *q, int *val) {
     q->get_attempts++;
 
@@ -136,6 +135,7 @@ int blocking_queue_get(blocking_queue_t *q, int *val) {
     while (q->count == 0) {
         pthread_cond_wait(&q->not_empty, &q->lock);
     }
+
     qnode_t *tmp = q->first;
 
     *val = tmp->val;
