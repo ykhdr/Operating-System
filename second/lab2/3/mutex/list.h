@@ -24,6 +24,7 @@ typedef struct _Storage {
 typedef struct _ThreadData {
     storage_t *storage;
     int *counter;
+    char *name;
 } thread_data_t;
 
 

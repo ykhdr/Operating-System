@@ -2,7 +2,7 @@
 #include <pthread.h>
 #include "list.h"
 
-#define STORAGE_CAPACITY 10000
+#define STORAGE_CAPACITY 1000
 #define THREAD_COUNT 6
 #define ASC 0
 #define DESC 1
@@ -24,10 +24,10 @@ void* ascending_thread(void* data) {
             break;
         }
         node_t *curr2, *tmp;
+        int pair_count = 0;
         while (1) {
             if (curr != NULL && pthread_rwlock_tryrdlock(&curr->sync) == 0) {
                 if (curr->next != NULL && pthread_rwlock_tryrdlock(&curr->next->sync) == 0) {
-                    int pair_count = 0;
                     curr2 = curr->next;
                     if (strlen(curr->value) < strlen(curr2->value)) {
                         pair_count++;
@@ -50,7 +50,7 @@ void* ascending_thread(void* data) {
                 curr = curr->next;
             }
         }
-
+        printf("[%s] : %d\n",thread_data->name, pair_count);
         (*counter)++;
     }
     return NULL;
@@ -67,10 +67,10 @@ void* descending_thread(void* data) {
     while (1) {
         node_t* curr = storage->first;
         node_t *curr2, *tmp;
+        int pair_count = 0;
         while (1) {
             if (curr != NULL && pthread_rwlock_tryrdlock(&curr->sync) == 0) {
                 if (curr->next != NULL && pthread_rwlock_tryrdlock(&curr->next->sync) == 0) {
-                    int pair_count = 0;
                     curr2 = curr->next;
                     if (strlen(curr->value) > strlen(curr2->value)) {
                         pair_count++;
@@ -93,6 +93,7 @@ void* descending_thread(void* data) {
                 curr = curr->next;
             }
         }
+        printf("[%s] : %d\n",thread_data->name, pair_count);
         (*counter)++;
     }
     return NULL;
@@ -110,10 +111,11 @@ void* equal_length_thread(void* data) {
     while (1) {
         node_t* curr = storage->first;
         node_t *curr2, *tmp;
+        int pair_count = 0;
         while (1) {
             if (curr != NULL && pthread_rwlock_tryrdlock(&curr->sync) == 0) {
                 if (curr->next != NULL && pthread_rwlock_tryrdlock(&curr->next->sync) == 0) {
-                    int pair_count = 0;
+
                     curr2 = curr->next;
                     if (strlen(curr->value) == strlen(curr2->value)) {
                         pair_count++;
@@ -136,6 +138,7 @@ void* equal_length_thread(void* data) {
                 curr = curr->next;
             }
         }
+        printf("[%s] : %d\n",thread_data->name, pair_count);
         (*counter)++;
     }
     return NULL;
@@ -153,17 +156,21 @@ void* swap_thread(void* data) {
             break;
         }
         node_t *curr2, *curr3, *tmp;
+        int swap_count = 0;
         while (1) {
+            int isSwap = rand() % 2 == 0;
+
             if (curr1 != NULL && pthread_rwlock_trywrlock(&curr1->sync) == 0) {
                 if (curr1->next != NULL && pthread_rwlock_trywrlock(&curr1->next->sync) == 0) {
                     if (curr1->next->next != NULL && pthread_rwlock_trywrlock(&curr1->next->next->sync) == 0) {
                         curr2 = curr1->next;
                         curr3 = curr1->next->next;
-                        if (rand() % 2 == 0) {
+                        if (isSwap) {
                             curr2->next = curr3->next;
                             curr3->next = curr2;
                             curr1->next = curr3;
                             (*counter)++;
+                            swap_count++;
                         }
                         tmp = curr1;
                         curr1 = tmp->next;
@@ -192,6 +199,7 @@ void* swap_thread(void* data) {
                 curr1 = curr1->next;
             }
         }
+        printf("[%s] : %d\n",thread_data->name, swap_count);
     }
 
     return NULL;
@@ -205,7 +213,7 @@ void* count_monitor(void* arg) {
         printf("[%d] ASC: %d, DESC: %d, EQ: %d, SWAP1: %d, SWAP2: %d, SWAP3: %d\n",
                iteration, counters[ASC], counters[DESC], counters[EQ], counters[SWAP1], counters[SWAP2], counters[SWAP3]);
         iteration++;
-        sleep(1);
+        usleep(1000);
     }
     return NULL;
 }
@@ -219,12 +227,12 @@ int main() {
 
     int* counters = calloc(THREAD_COUNT, sizeof(int));
 
-    thread_data_t ascending_data = {storage, &counters[ASC]};
-    thread_data_t descending_data = {storage, &counters[DESC]};
-    thread_data_t equal_data = {storage, &counters[EQ]};
-    thread_data_t swap_data1 = {storage, &counters[SWAP1]};
-    thread_data_t swap_data2 = {storage, &counters[SWAP2]};
-    thread_data_t swap_data3 = {storage, &counters[SWAP3]};
+    thread_data_t ascending_data = {storage, &counters[ASC], "ASC"};
+    thread_data_t descending_data = {storage, &counters[DESC], "DESC"};
+    thread_data_t equal_data = {storage, &counters[EQ], "EQ"};
+    thread_data_t swap_data1 = {storage, &counters[SWAP1], "SWAP1"};
+    thread_data_t swap_data2 = {storage, &counters[SWAP2], "SWAP2"};
+    thread_data_t swap_data3 = {storage, &counters[SWAP3], "SWAP3"};
 
     pthread_create(&ascending_tid, NULL, ascending_thread, &ascending_data);
     pthread_create(&descending_tid, NULL, descending_thread, &descending_data);
