@@ -88,11 +88,11 @@ void blocking_queue_destroy(blocking_queue_t **q) {
 
 
 int blocking_queue_add(blocking_queue_t *q, int val) {
+    pthread_mutex_lock(&q->lock);
+
     q->add_attempts++;
 
     assert(q->count <= q->max_count);
-
-    pthread_mutex_lock(&q->lock);
 
     while (q->count == q->max_count) {
         pthread_cond_wait(&q->not_full, &q->lock);
@@ -126,11 +126,11 @@ int blocking_queue_add(blocking_queue_t *q, int val) {
 }
 
 int blocking_queue_get(blocking_queue_t *q, int *val) {
+    pthread_mutex_lock(&q->lock);
+
     q->get_attempts++;
 
     assert(q->count >= 0);
-
-    pthread_mutex_lock(&q->lock);
 
     while (q->count == 0) {
         pthread_cond_wait(&q->not_empty, &q->lock);
