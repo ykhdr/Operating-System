@@ -10,8 +10,8 @@ void thread_1(uthread_config_t *config,void *arg) {
     char *str = (char *) arg;
     for (int i = 0; i < 5; i++) {
         printf("hello in thread_1: %s\n", str);
-        sleep(1);
-        uthread_scheduler(config);
+        uthread_sleep(5, config);
+//        uthread_scheduler(config);
     }
     puts("thread_1 finished");
 }
@@ -20,8 +20,8 @@ void thread_2(uthread_config_t *config, void *arg) {
     char *str = (char *) arg;
     for (int i = 0; i < 7; i++) {
         printf("hello in thread_2: %s\n", str);
-        sleep(1);
-        uthread_scheduler(config);
+        uthread_sleep(1, config);
+//        uthread_scheduler(config);
     }
     puts("thread_2 finished");
 }
@@ -30,8 +30,8 @@ void thread_3(uthread_config_t *config, void *arg) {
     char *str = (char *) arg;
     for (int i = 0; i < 10; i++) {
         printf("hello in thread_3: %s\n", str);
-        sleep(1);
-        uthread_scheduler(config);
+        uthread_sleep(3,config);
+//        uthread_scheduler(config);
     }
     puts("thread_3 finished");
 }

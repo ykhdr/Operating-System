@@ -11,6 +11,7 @@
 #include <fcntl.h>
 #include <ucontext.h>
 #include <stdlib.h>
+#include <time.h>
 
 #define PAGE 4096
 #define STACK_SIZE (PAGE * 8)
@@ -18,6 +19,7 @@
 
 uthread_config_t *uthread_init(uthread_struct_t *main_thread) {
     uthread_config_t *config = (uthread_config_t *) malloc(sizeof(uthread_config_t));
+    main_thread->isSleep = false;
     config->uthreads[0] = main_thread;
     config->uthread_count = 1;
     config->uthread_cur = 0;
@@ -30,7 +32,22 @@ void uthread_scheduler(uthread_config_t *config) {
 
     cur_context = &(config->uthreads[config->uthread_cur]->ucontext);
 
-    config->uthread_cur = (config->uthread_cur + 1) % config->uthread_count;
+    while(true){
+        config->uthread_cur = (config->uthread_cur + 1) % config->uthread_count;
+
+        uthread_struct_t *thread = config->uthreads[config->uthread_cur];
+
+        if (!thread->isSleep){
+            break;
+        }
+
+        time_t cur_time = time(NULL);
+
+        if (cur_time > thread->seconds_to_sleep + thread->start_sleep){
+            thread->isSleep = false;
+            break;
+        }
+    }
 
     next_context = &(config->uthreads[config->uthread_cur]->ucontext);
 
@@ -92,6 +109,7 @@ int uthread_create(uthread_config_t *config, uthread_struct_t **thread, void *(s
     mythread->start_routine = start_routine;
     mythread->arg = arg;
     mythread->is_finished = false;
+    mythread->isSleep=false;
 
     config->uthreads[config->uthread_count] = mythread;
     config->uthread_count++;
@@ -102,4 +120,13 @@ int uthread_create(uthread_config_t *config, uthread_struct_t **thread, void *(s
 
 void uthread_finalize(uthread_config_t *config) {
     free(config);
+}
+
+void uthread_sleep(int seconds, uthread_config_t* config) {
+    uthread_struct_t *thread = config->uthreads[config->uthread_cur];
+    thread->start_sleep = time(NULL) ;
+    thread->seconds_to_sleep = seconds;
+    thread->isSleep = true;
+
+    uthread_scheduler(config);
 }

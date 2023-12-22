@@ -7,6 +7,7 @@
 
 #include <sys/ucontext.h>
 #include <stdbool.h>
+#include <bits/types/time_t.h>
 
 #define MAX_THREADS_COUNT 8
 
@@ -21,6 +22,11 @@ typedef struct uthread_struct_t{
     void *arg;
     ucontext_t ucontext;
     bool is_finished;
+
+    time_t start_sleep;
+    int seconds_to_sleep;
+    bool isSleep;
+
 } uthread_struct_t;
 
 typedef struct uthread_config_t {
@@ -32,6 +38,8 @@ typedef struct uthread_config_t {
 uthread_config_t *uthread_init(uthread_struct_t *main_thread);
 
 void uthread_scheduler(uthread_config_t *config);
+
+void uthread_sleep(int seconds, uthread_config_t* config);
 
 int uthread_create(uthread_config_t *config, uthread_struct_t **thread, void *(start_routine), void *arg);
 
