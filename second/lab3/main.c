@@ -9,7 +9,6 @@
 #include <signal.h>
 #include <arpa/inet.h>
 #include <semaphore.h>
-#include "cache_list.h"
 #include "logger.h"
 
 #define FAIL (-1)
@@ -20,7 +19,6 @@
 typedef struct {
     int client_socket;
     char *request;
-    Cache *cache;
     sem_t *thread_semaphore;
 } context;
 
@@ -31,35 +29,6 @@ void sigint_handler(int signo) {
         logg("Shutting down the server", BLUE);
         server_is_on = 0;
     }
-}
-
-Cache* init_cache() {
-    logg("Initializing cache", YELLOW);
-    Cache *cache = malloc(sizeof(Cache));
-    if (cache == NULL) {
-        return NULL;
-    }
-
-    cache->next = NULL;
-    cache->lock = malloc(sizeof (pthread_mutex_t));
-
-    pthread_mutex_init(cache->lock,NULL);
-
-    return cache;
-}
-
-void destroy_cache(Cache* cache) {
-    logg("Destroying cache", YELLOW);
-
-    Cache *cur = cache;
-    pthread_mutex_destroy(cache->lock);
-    while (cur != NULL) {
-        delete_cache_record(cur);
-        Cache *next = cur->next;
-        free(cur);
-        cur = next;
-    }
-
 }
 
 int create_server_socket() {
@@ -111,27 +80,6 @@ int read_request(int client_socket, char *request) {
     return EXIT_SUCCESS;
 }
 
-int send_from_cache(char *request, int client_socket, Cache* cache) {
-    char *cache_record = calloc(CACHE_BUFFER_SIZE, sizeof(char));
-    ssize_t len = find_in_cache(cache, request, cache_record);
-
-    if (len != FAIL) {
-        ssize_t send_bytes = write(client_socket, cache_record, len);
-        if (send_bytes == FAIL) {
-            logg("Error while sending cached data", RED);
-            close(client_socket);
-            free(cache_record);
-            return EXIT_FAILURE;
-        }
-        free(cache_record);
-        logg_int("Send cached response to the client, len = ", send_bytes, PURPLE);
-        printf("\n");
-        close(client_socket);
-        return EXIT_SUCCESS;
-    }
-    return EXIT_FAILURE;
-}
-
 int connect_to_remote(char *host) {
     struct addrinfo hints, *res0;
     memset(&hints, 0, sizeof hints);
@@ -167,15 +115,10 @@ void *client_handler(void *arg) {
     context *ctx = (context *) arg;
     int client_socket = ctx->client_socket;
     char *request0 = ctx->request;
-    Cache *cache = ctx->cache;
     sem_t *thread_semaphore = ctx->thread_semaphore;
 
     char request[BUFFER_SIZE];
     strcpy(request, request0);
-
-    Cache *record = malloc(sizeof(Cache));
-    init_cache_record(record, cache->lock);
-    add_request(record, request0);
 
     unsigned char host[50];
     const unsigned char *host_result = memccpy(host, strstr((char *) request, "Host:") + 6, '\r', sizeof(host));
@@ -196,30 +139,28 @@ void *client_handler(void *arg) {
         close(dest_socket);
         return NULL;
     }
-    logg_int("  Send request to remote server, len = ", bytes_sent, GREEN);
+    logg_int("Send request to remote server, len = ", bytes_sent, GREEN);
 
     char *buffer = calloc(BUFFER_SIZE, sizeof(char));
-    ssize_t bytes_read, all_bytes_read = 0;
+    ssize_t bytes_read = 0;
     while ((bytes_read = read(dest_socket, buffer, BUFFER_SIZE)) > 0) {
         bytes_sent = write(client_socket, buffer, bytes_read);
         if (bytes_sent == -1) {
             logg("Error while sending data to client", RED);
+            free(buffer);
+            free(request0);
             close(client_socket);
             close(dest_socket);
             return NULL;
-        } else {
-            add_response(record, buffer, all_bytes_read, bytes_read);
         }
-        all_bytes_read += bytes_read;
     }
-
-    add_size(record, all_bytes_read);
-    cache = push_record(cache, record);
 
     close(client_socket);
     close(dest_socket);
     free(buffer);
     free(request0);
+
+    logg("All data sent to client. Connection closed", BLUE);
 
     sem_post(thread_semaphore);
 
@@ -240,24 +181,22 @@ int main() {
         exit(EXIT_FAILURE);
     }
 
-    Cache *cache = init_cache();
-    if (cache == NULL) {
-        logg("Error to init cache", RED);
-        close(server_socket);
-        exit(EXIT_FAILURE);
-    }
-
     logg_int("Server listening on port ", PORT, PURPLE);
 
-    while (server_is_on) {
+    while (1) {
         int client_socket;
         struct sockaddr_in client_addr;
         socklen_t client_addr_size = sizeof(client_addr);
         client_socket = accept(server_socket, (struct sockaddr *) &client_addr, &client_addr_size);
+
+        if (!server_is_on){
+            close(client_socket);
+            break;
+        }
+
         if (client_socket == FAIL) {
             logg("Failed to accept", RED);
             close(server_socket);
-            destroy_cache(cache);
             exit(EXIT_FAILURE);
         }
         char *buff = calloc(BUFFER_SIZE, sizeof(char));
@@ -274,30 +213,21 @@ int main() {
             continue;
         }
 
-        if (send_from_cache(request, client_socket, cache) == EXIT_SUCCESS) {
-            free(request);
+        sem_wait(&thread_semaphore);
+        logg("Init new connection", PURPLE);
+        context ctx = {client_socket, request, &thread_semaphore};
+        pthread_t handler_thread;
+        err = pthread_create(&handler_thread, NULL, &client_handler, &ctx);
+        if (err == -1) {
+            logg("Failed to create thread", RED);
             close(client_socket);
-
-            continue;
-        } else {
-            sem_wait(&thread_semaphore);
-            logg("Init new connection", PURPLE);
-            context ctx = {client_socket, request, cache, &thread_semaphore};
-            pthread_t handler_thread;
-            err = pthread_create(&handler_thread, NULL, &client_handler, &ctx);
-            if (err == -1) {
-                logg("Failed to create thread", RED);
-                close(client_socket);
-                close(server_socket);
-                destroy_cache(cache);
-                exit(EXIT_FAILURE);
-            }
+            close(server_socket);
+            exit(EXIT_FAILURE);
         }
     }
 
 
     close(server_socket);
-    destroy_cache(cache);
     sem_destroy(&thread_semaphore);
     exit(EXIT_SUCCESS);
 }
