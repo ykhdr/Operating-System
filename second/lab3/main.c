@@ -89,7 +89,6 @@ int connect_to_remote(char *host) {
     int status = getaddrinfo((char *) host, "http", &hints, &res0);
     if (status != 0) {
         logg("getaddrinAfo error", RED);
-//        freeaddrinfo(res0);
         return FAIL;
     }
 
@@ -99,11 +98,21 @@ int connect_to_remote(char *host) {
         return FAIL;
     }
 
-    int err = connect(dest_socket, res0->ai_addr, res0->ai_addrlen);
+    struct timeval tv;
+    tv.tv_sec = 5;
+    tv.tv_usec = 0;
+    int err = setsockopt(dest_socket, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
+
+    if (err == FAIL) {
+        logg("Error while setting receive timeout", RED);
+        close(dest_socket);
+        return FAIL;
+    }
+
+    err = connect(dest_socket, res0->ai_addr, res0->ai_addrlen);
     if (err == FAIL) {
         logg("Error while connecting to remote server", RED);
         close(dest_socket);
-        freeaddrinfo(res0);
         return FAIL;
     }
 
@@ -128,7 +137,8 @@ void *client_handler(void *arg) {
     int dest_socket = connect_to_remote((char *) host);
     if (dest_socket == FAIL) {
         close(client_socket);
-        return NULL;
+        sem_post(thread_semaphore);
+        pthread_exit(NULL);
     }
     logg("Create new connection with remote server", GREEN);
 
@@ -137,21 +147,32 @@ void *client_handler(void *arg) {
         logg("Error while sending request to remote server", RED);
         close(client_socket);
         close(dest_socket);
-        return NULL;
+        sem_post(thread_semaphore);
+        pthread_exit(NULL);
     }
     logg_int("Send request to remote server, len = ", bytes_sent, GREEN);
 
     char *buffer = calloc(BUFFER_SIZE, sizeof(char));
     ssize_t bytes_read = 0;
-    while ((bytes_read = read(dest_socket, buffer, BUFFER_SIZE)) > 0) {
-        bytes_sent = write(client_socket, buffer, bytes_read);
-        if (bytes_sent == -1) {
+    while (1) {
+        bytes_read = recv(dest_socket, buffer, BUFFER_SIZE, MSG_NOSIGNAL);
+        if (bytes_read < 0){
+            logg("Error while receiving data from dest" ,RED);
+            free(buffer);
+            close(client_socket);
+            sem_post(thread_semaphore);
+            pthread_exit(NULL);
+        } else if (bytes_read == 0){
+            break;
+        }
+
+        bytes_sent = send(client_socket, buffer, bytes_read,MSG_NOSIGNAL);
+        if (bytes_sent < 0) {
             logg("Error while sending data to client", RED);
             free(buffer);
-            free(request0);
-            close(client_socket);
             close(dest_socket);
-            return NULL;
+            sem_post(thread_semaphore);
+            pthread_exit(NULL);
         }
     }
 
@@ -164,7 +185,7 @@ void *client_handler(void *arg) {
 
     sem_post(thread_semaphore);
 
-    return NULL;
+    pthread_exit(NULL);
 }
 
 int main() {
