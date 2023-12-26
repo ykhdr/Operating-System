@@ -13,13 +13,12 @@
 
 #define FAIL (-1)
 #define PORT 80
-#define MAX_USERS_COUNT 10
-#define BUFFER_SIZE 4096
+#define MAX_USERS_COUNT 15
+#define BUFFER_SIZE 2048
 
 typedef struct {
     int client_socket;
     char *request;
-    sem_t *thread_semaphore;
 } context;
 
 int server_is_on = 1;
@@ -99,9 +98,9 @@ int connect_to_remote(char *host) {
     }
 
     struct timeval tv;
-    tv.tv_sec = 5;
+    tv.tv_sec = 10;
     tv.tv_usec = 0;
-    int err = setsockopt(dest_socket, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
+    int err = setsockopt(dest_socket, SOL_SOCKET, SO_RCVTIMEO, (const char *) &tv, sizeof tv);
 
     if (err == FAIL) {
         logg("Error while setting receive timeout", RED);
@@ -119,35 +118,74 @@ int connect_to_remote(char *host) {
     return dest_socket;
 }
 
+void getUrl(char *msg_buf, char *url) {
+    char *url_tmp = strstr(msg_buf, "http");
+
+    int i = 0;
+    while (url_tmp[i] != ' ') {
+        url[i] = url_tmp[i];
+        i++;
+    }
+    url[i] = '\0';
+}
+
+void parse_msg(char *msg_buf, int *rqst_length, char *new_msg, char *serv_hostname, char *url) {
+    getUrl(msg_buf, url);
+    int i = 0;
+    char method[10] = {0};
+    while (msg_buf[i] != ' ') {
+        method[i] = msg_buf[i];
+        i++;
+    }
+    strncpy(new_msg, method, strlen(method));
+    strcat(new_msg, " ");
+
+    int host_len = 0;
+    i += 8;
+    while (msg_buf[i] != '/') {
+        serv_hostname[host_len] = msg_buf[i];
+        host_len++;
+        i++;
+    }
+
+    strcat(new_msg, msg_buf + i);
+    char *version = strstr(new_msg, "HTTP/1");
+    version[7] = '0';
+    serv_hostname[host_len] = '\0';
+    *rqst_length = (int) strlen(new_msg);
+}
+
 
 void *client_handler(void *arg) {
     context *ctx = (context *) arg;
     int client_socket = ctx->client_socket;
-    char *request0 = ctx->request;
-    sem_t *thread_semaphore = ctx->thread_semaphore;
+    char request0[BUFFER_SIZE];
+    strncpy(request0, ctx->request, strlen(ctx->request));
+    free(ctx->request);
 
     char request[BUFFER_SIZE];
-    strcpy(request, request0);
-
-    unsigned char host[50];
-    const unsigned char *host_result = memccpy(host, strstr((char *) request, "Host:") + 6, '\r', sizeof(host));
-    host[host_result - host - 1] = '\0';
+    char host[50];
+    char url[200];
+    int request_len = 0;
+    parse_msg(request0, &request_len, request, host, url);
     logg_char("Remote server host name: ", (char *) host, GREEN);
+
+    logg_char("Parsed request:\n", request, GREEN);
 
     int dest_socket = connect_to_remote((char *) host);
     if (dest_socket == FAIL) {
         close(client_socket);
-        sem_post(thread_semaphore);
+        free(ctx);
         pthread_exit(NULL);
     }
-    logg("Create new connection with remote server", GREEN);
+    logg("Create new connection with remote server", PURPLE);
 
     ssize_t bytes_sent = write(dest_socket, request, strlen(request));
     if (bytes_sent == FAIL) {
         logg("Error while sending request to remote server", RED);
         close(client_socket);
         close(dest_socket);
-        sem_post(thread_semaphore);
+        free(ctx);
         pthread_exit(NULL);
     }
     logg_int("Send request to remote server, len = ", bytes_sent, GREEN);
@@ -156,22 +194,22 @@ void *client_handler(void *arg) {
     ssize_t bytes_read = 0;
     while (1) {
         bytes_read = recv(dest_socket, buffer, BUFFER_SIZE, MSG_NOSIGNAL);
-        if (bytes_read < 0){
-            logg("Error while receiving data from dest" ,RED);
+        if (bytes_read < 0) {
+            logg("Error while receiving data from dest", RED);
             free(buffer);
             close(client_socket);
-            sem_post(thread_semaphore);
+            free(ctx);
             pthread_exit(NULL);
-        } else if (bytes_read == 0){
+        } else if (bytes_read == 0) {
             break;
         }
 
-        bytes_sent = send(client_socket, buffer, bytes_read,MSG_NOSIGNAL);
+        bytes_sent = send(client_socket, buffer, bytes_read, MSG_NOSIGNAL);
         if (bytes_sent < 0) {
             logg("Error while sending data to client", RED);
             free(buffer);
             close(dest_socket);
-            sem_post(thread_semaphore);
+            free(ctx);
             pthread_exit(NULL);
         }
     }
@@ -179,11 +217,9 @@ void *client_handler(void *arg) {
     close(client_socket);
     close(dest_socket);
     free(buffer);
-    free(request0);
+    free(ctx);
 
     logg("All data sent to client. Connection closed", BLUE);
-
-    sem_post(thread_semaphore);
 
     pthread_exit(NULL);
 }
@@ -191,10 +227,6 @@ void *client_handler(void *arg) {
 int main() {
     logg("SERVER START", BACK_PURP);
     signal(SIGINT, sigint_handler);
-
-    sem_t thread_semaphore;
-
-    sem_init(&thread_semaphore, 0, MAX_USERS_COUNT);
 
     int server_socket = create_server_socket();
     if (server_socket == FAIL) {
@@ -210,7 +242,7 @@ int main() {
         socklen_t client_addr_size = sizeof(client_addr);
         client_socket = accept(server_socket, (struct sockaddr *) &client_addr, &client_addr_size);
 
-        if (!server_is_on){
+        if (!server_is_on) {
             close(client_socket);
             break;
         }
@@ -234,11 +266,15 @@ int main() {
             continue;
         }
 
-        sem_wait(&thread_semaphore);
         logg("Init new connection", PURPLE);
-        context ctx = {client_socket, request, &thread_semaphore};
+
+        context *ctx = malloc(sizeof (context));
+        ctx->request = request;
+        ctx->client_socket = client_socket;
+        printf("%s", ctx->request);
+
         pthread_t handler_thread;
-        err = pthread_create(&handler_thread, NULL, &client_handler, &ctx);
+        err = pthread_create(&handler_thread, NULL, &client_handler, ctx);
         if (err == -1) {
             logg("Failed to create thread", RED);
             close(client_socket);
@@ -249,6 +285,5 @@ int main() {
 
 
     close(server_socket);
-    sem_destroy(&thread_semaphore);
     exit(EXIT_SUCCESS);
 }
