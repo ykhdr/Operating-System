@@ -97,18 +97,7 @@ int connect_to_remote(char *host) {
         return FAIL;
     }
 
-    struct timeval tv;
-    tv.tv_sec = 10;
-    tv.tv_usec = 0;
-    int err = setsockopt(dest_socket, SOL_SOCKET, SO_RCVTIMEO, (const char *) &tv, sizeof tv);
-
-    if (err == FAIL) {
-        logg("Error while setting receive timeout", RED);
-        close(dest_socket);
-        return FAIL;
-    }
-
-    err = connect(dest_socket, res0->ai_addr, res0->ai_addrlen);
+    int err = connect(dest_socket, res0->ai_addr, res0->ai_addrlen);
     if (err == FAIL) {
         logg("Error while connecting to remote server", RED);
         close(dest_socket);
@@ -118,8 +107,8 @@ int connect_to_remote(char *host) {
     return dest_socket;
 }
 
-void getUrl(char *msg_buf, char *url) {
-    char *url_tmp = strstr(msg_buf, "http");
+void parse_url(char *request, char *url) {
+    char *url_tmp = strstr(request, "http");
 
     int i = 0;
     while (url_tmp[i] != ' ') {
@@ -129,30 +118,31 @@ void getUrl(char *msg_buf, char *url) {
     url[i] = '\0';
 }
 
-void parse_msg(char *msg_buf, int *rqst_length, char *new_msg, char *serv_hostname, char *url) {
-    getUrl(msg_buf, url);
+void parse_request(char *request, int *request_len, char *parsed_request, char *serv_hostname, char *url) {
+    parse_url(request, url);
     int i = 0;
     char method[10] = {0};
-    while (msg_buf[i] != ' ') {
-        method[i] = msg_buf[i];
+    while (request[i] != ' ') {
+        method[i] = request[i];
         i++;
     }
-    strncpy(new_msg, method, strlen(method));
-    strcat(new_msg, " ");
+
+    strncpy(parsed_request, method, strlen(method));
+    strcat(parsed_request, " ");
 
     int host_len = 0;
     i += 8;
-    while (msg_buf[i] != '/') {
-        serv_hostname[host_len] = msg_buf[i];
+    while (request[i] != '/') {
+        serv_hostname[host_len] = request[i];
         host_len++;
         i++;
     }
 
-    strcat(new_msg, msg_buf + i);
-    char *version = strstr(new_msg, "HTTP/1");
+    strcat(parsed_request, request + i);
+    char *version = strstr(parsed_request, "HTTP/1");
     version[7] = '0';
     serv_hostname[host_len] = '\0';
-    *rqst_length = (int) strlen(new_msg);
+    *request_len = (int) strlen(parsed_request);
 }
 
 
@@ -167,7 +157,7 @@ void *client_handler(void *arg) {
     char host[50];
     char url[200];
     int request_len = 0;
-    parse_msg(request0, &request_len, request, host, url);
+    parse_request(request0, &request_len, request, host, url);
     logg_char("Remote server host name: ", (char *) host, GREEN);
 
     logg_char("Parsed request:\n", request, GREEN);
@@ -195,7 +185,7 @@ void *client_handler(void *arg) {
     while (1) {
         bytes_read = recv(dest_socket, buffer, BUFFER_SIZE, MSG_NOSIGNAL);
         if (bytes_read < 0) {
-            logg("Error while receiving data from dest", RED);
+//            logg("Error while receiving data from dest", RED);
             free(buffer);
             close(client_socket);
             free(ctx);
@@ -206,7 +196,7 @@ void *client_handler(void *arg) {
 
         bytes_sent = send(client_socket, buffer, bytes_read, MSG_NOSIGNAL);
         if (bytes_sent < 0) {
-            logg("Error while sending data to client", RED);
+//            logg("Error while sending data to client", RED);
             free(buffer);
             close(dest_socket);
             free(ctx);
@@ -271,7 +261,6 @@ int main() {
         context *ctx = malloc(sizeof (context));
         ctx->request = request;
         ctx->client_socket = client_socket;
-        printf("%s", ctx->request);
 
         pthread_t handler_thread;
         err = pthread_create(&handler_thread, NULL, &client_handler, ctx);
