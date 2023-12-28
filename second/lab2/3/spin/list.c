@@ -35,8 +35,16 @@ void add_node(storage_t *storage, const char *value) {
 
 void fill_storage(storage_t *storage) {
     for (int i = 0; i < storage->capacity; ++i) {
-        char buff[10];
-        sprintf(buff, "%d", (i) % storage->capacity);
+//        char buff[100];
+
+
+        int len = rand() % 100;
+        char *buff = malloc(sizeof(char)*len);
+        
+        for(int j = 0; j < len; j++){
+            buff[j] = i % 10 + '0';
+        }
+
         add_node(storage, buff);
     }
 }
